@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.projects.photos_and_map.ui.screens.authorization
 
 import androidx.compose.foundation.background
@@ -134,6 +132,7 @@ fun AuthTab(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthorizationPage(
     login: String,
