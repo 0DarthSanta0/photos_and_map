@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">photos-and-map</string>
+
+    <string name="login_field">Login</string>
+    <string name="password_field">Password</string>
+    <string name="confirm_password_field">Confirm password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="login_button">LOG IN</string>
+    <string name="register_button">SIGN UP</string>
 </resources>
