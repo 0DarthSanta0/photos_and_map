@@ -32,6 +32,9 @@ import com.projects.photos_and_map.ui.theme.AppTheme
 import java.util.Date
 import java.util.Locale
 
+
+const val DATE_PATTERN = "dd.MM.yyyy HH:mm"
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PhotoItem(
@@ -93,7 +96,7 @@ fun PhotoItem(
         }
         Text(
             style = MaterialTheme.typography.bodyMedium,
-            text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+            text = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
                 .format(Date(image.date * 1000)).toString(),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

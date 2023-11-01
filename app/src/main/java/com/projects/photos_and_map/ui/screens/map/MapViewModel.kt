@@ -25,7 +25,7 @@ class MapViewModel(
 
     private fun getPoints() {
         viewModelScope.launch {
-            getMarksUseCase().collect {getMarksRequest ->
+            getMarksUseCase().collect { getMarksRequest ->
                 getMarksRequest.onSuccess { marks ->
                     _marks.value = marks
                 }

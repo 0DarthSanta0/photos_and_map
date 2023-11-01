@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.projects.photos_and_map.R
 import com.projects.photos_and_map.ui.theme.AppTheme
 
 @Composable
@@ -29,7 +31,6 @@ fun ConfirmationDialog(
             onDismissRequest = { onDismiss() },
             properties = DialogProperties(dismissOnClickOutside = true)
         ) {
-
             Column(
                 modifier = Modifier
                     .padding(AppTheme.dimens.spacing15)
@@ -39,7 +40,7 @@ fun ConfirmationDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Are you sure?",
+                    text = stringResource(R.string.confirm_question),
                     modifier = Modifier.padding(top = AppTheme.dimens.spacing15)
                 )
                 Row(
@@ -50,7 +51,7 @@ fun ConfirmationDialog(
                         onClick = { onDismiss() },
                         modifier = Modifier.padding(AppTheme.dimens.spacing08)
                     ) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel_button))
                     }
                     TextButton(
                         onClick = {
@@ -59,10 +60,9 @@ fun ConfirmationDialog(
                         },
                         modifier = Modifier.padding(AppTheme.dimens.spacing08)
                     ) {
-                        Text("Confirm")
+                        Text(stringResource(R.string.confirm_button))
                     }
                 }
-
             }
         }
     }

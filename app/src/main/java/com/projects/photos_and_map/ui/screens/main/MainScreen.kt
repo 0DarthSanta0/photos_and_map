@@ -33,12 +33,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.projects.photos_and_map.R
 import com.projects.photos_and_map.ui.navigation.MainNavigation
 import com.projects.photos_and_map.ui.navigation.Screens
 import com.projects.photos_and_map.ui.theme.AppTheme
 import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,7 +60,7 @@ fun MainScreen() {
                         .background(MaterialTheme.colorScheme.primary),
                     contentAlignment = Alignment.BottomStart,
                 ) { }
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(AppTheme.dimens.spacing10))
                 NavigationDrawerItem(
                     icon = { Icon(items[0], contentDescription = null) },
                     label = { Text(stringResource(R.string.photos)) },
@@ -90,8 +90,7 @@ fun MainScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(AppTheme.dimens.spacing60)
-                .background(MaterialTheme.colorScheme.primary)
-            ,
+                .background(MaterialTheme.colorScheme.primary),
             horizontalArrangement = Arrangement.Start
         ) {
             IconButton(onClick = { scope.launch { drawerState.open() } }) {
@@ -105,4 +104,3 @@ fun MainScreen() {
         MainNavigation(selectedPage.value)
     }
 }
-

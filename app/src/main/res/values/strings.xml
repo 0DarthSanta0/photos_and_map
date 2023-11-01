@@ -15,7 +15,14 @@
 
     <string name="add">Add</string>
     <string name="menu">Menu</string>
+    <string name="back">Back</string>
 
     <string name="comment">Comment</string>
     <string name="send_button">Send</string>
+
+    <string name="confirm_question">Are you sure?</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="cancel_button">Cancel</string>
+
+    <string name="take_picture">Take picture</string>
 </resources>

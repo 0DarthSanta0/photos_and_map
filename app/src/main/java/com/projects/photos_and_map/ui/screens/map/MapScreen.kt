@@ -19,7 +19,6 @@ import com.projects.photos_and_map.ui.theme.AppTheme
 fun MapScreen(
     viewModel: MapViewModel = viewModel(factory = MapViewModel.Factory)
 ) {
-
     val points by viewModel.marks.collectAsStateWithLifecycle()
 
     val uiSettings = remember {
@@ -35,7 +34,7 @@ fun MapScreen(
         points.forEach { point ->
             Marker(
                 position = LatLng(point.lat, point.lng),
-                title = "Image (${point.lat}, ${point.lng})",
+                title = "(${point.lat}, ${point.lng})",
                 icon = BitmapDescriptorFactory.defaultMarker(
                     BitmapDescriptorFactory.HUE_RED
                 )

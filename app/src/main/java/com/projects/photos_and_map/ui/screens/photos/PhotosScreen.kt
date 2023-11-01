@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.projects.photos_and_map.R
-import com.projects.photos_and_map.ui.screens.core.ScrollIndexChange
+import com.projects.photos_and_map.ui.screens.core.components.ScrollGridIndexChange
 import com.projects.photos_and_map.ui.theme.AppTheme
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -46,20 +46,17 @@ fun PhotosScreen(
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val isFirstLoading by viewModel.isFirstLoading.collectAsStateWithLifecycle()
     val photos by viewModel.photosForDisplay.collectAsStateWithLifecycle()
-
     val lazyGridState: LazyGridState = rememberLazyGridState()
-
-    ScrollIndexChange(
-        lazyGridState = lazyGridState,
-        onScrollIndexChange = viewModel::onUIScrollIndexChange
-    )
-
     val permissions = listOf(
         android.Manifest.permission.CAMERA,
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
-
     val permissionState = rememberMultiplePermissionsState(permissions)
+
+    ScrollGridIndexChange(
+        lazyGridState = lazyGridState,
+        onScrollIndexChange = viewModel::onUIScrollIndexChange
+    )
 
     Box(
         contentAlignment = Alignment.TopStart,
@@ -125,6 +122,7 @@ fun PhotosScreen(
             outputDirectory = outputDirectory,
             executor = cameraExecutor,
             onImageCaptured = viewModel::onPhoto,
+            takePhoto = viewModel::takePhoto
         )
     }
 }

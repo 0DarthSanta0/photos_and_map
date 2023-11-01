@@ -17,6 +17,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+
+private const val LIMIT = 20
+private const val INDEX_OFFSET = 6
+
 class DetailsViewModel(
     private val getCommentsUseCase: GetCommentsUseCase,
     private val postCommentsUseCase: PostCommentUseCase,
@@ -24,6 +28,7 @@ class DetailsViewModel(
     private val deleteCommentUseCase: DeleteCommentUseCase
 ) : ViewModel() {
     private var page = 0
+    private var isMoreComments = true
     private val _commentsForDisplay: MutableStateFlow<List<Comment>> = MutableStateFlow(listOf())
     val commentsForDisplay: StateFlow<List<Comment>> get() = _commentsForDisplay
     private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -34,12 +39,10 @@ class DetailsViewModel(
     val isFirstLoading: StateFlow<Boolean> get() = _isFirstLoading
     private val _newCommentText: MutableStateFlow<String> = MutableStateFlow("")
     val newCommentText: StateFlow<String> get() = _newCommentText
-    private val _isMoreComments: MutableStateFlow<Boolean> = MutableStateFlow(true)
     private val _isCommentValid: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isCommentValid: StateFlow<Boolean> get() = _isCommentValid
     private val _image: MutableStateFlow<Image?> = MutableStateFlow(null)
     val image: StateFlow<Image?> get() = _image
-
 
     fun requestComments(offset: Int, imageId: Int) {
         viewModelScope.launch {
@@ -47,9 +50,9 @@ class DetailsViewModel(
                 getCommentsRequest.onSuccess { commentsForList ->
                     _commentsForDisplay.value = commentsForList.comments
                     if (commentsForList.isOver) {
-                        _isMoreComments.value = false
+                        isMoreComments = false
                     } else {
-                        _isMoreComments.value = true
+                        isMoreComments = true
                         page++
                     }
                     _isLoading.value = false
@@ -85,7 +88,8 @@ class DetailsViewModel(
                     commentId = commentId
                 ).collect { deleteCommentRequest ->
                     deleteCommentRequest.onSuccess {
-                        _commentsForDisplay.value = _commentsForDisplay.value.filter { it.id != commentId }
+                        _commentsForDisplay.value =
+                            _commentsForDisplay.value.filter { it.id != commentId }
                     }
                 }
             }
@@ -104,7 +108,7 @@ class DetailsViewModel(
     }
 
     fun onUIScrollIndexChange(firstVisibleItemIndex: Int, imageId: Int) {
-        if (firstVisibleItemIndex > (page) * 20 - 14 && firstVisibleItemIndex > 6 && _isMoreComments.value) {
+        if (firstVisibleItemIndex > (page) * LIMIT - (LIMIT - INDEX_OFFSET) && firstVisibleItemIndex > INDEX_OFFSET && isMoreComments) {
             _isLoading.value = true
             _isFirstLoading.value = false
             requestComments(

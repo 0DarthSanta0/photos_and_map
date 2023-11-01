@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Base64
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -23,7 +25,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.concurrent.Executor
 
+
+private const val TYPE = ".png"
 
 class PhotosViewModel(
     private val postImageUseCase: PostImageUseCase,
@@ -53,21 +61,21 @@ class PhotosViewModel(
     fun onPhoto(uri: Uri) {
         _isCameraVisible.value = false
         LocationServices.getFusedLocationProviderClient(PhotosAndMapApplication.applicationContext()).lastLocation.onSuccessTask { location ->
-                viewModelScope.launch {
-                    val photo: String? = resizeAndEncodeImage(uri)
-                    if (photo != null) {
-                        postImageUseCase(
-                            base64Image = photo,
-                            lng = location?.longitude ?: 0.0,
-                            lat = location?.latitude ?: 0.0
-                        ).collect { postRequest ->
-                            postRequest.onSuccess { }
-                        }
+            viewModelScope.launch {
+                val photo: String? = resizeAndEncodeImage(uri)
+                if (photo != null) {
+                    postImageUseCase(
+                        base64Image = photo,
+                        lng = location?.longitude ?: 0.0,
+                        lat = location?.latitude ?: 0.0
+                    ).collect { postRequest ->
+                        postRequest.onSuccess { }
                     }
-                    _isLoading.value = true
-                    _isFirstLoading.value = false
-                    page = 0
-                    requestPhotos(page)
+                }
+                _isLoading.value = true
+                _isFirstLoading.value = false
+                page = 0
+                requestPhotos(page)
             }
             Tasks.forResult(null)
         }
@@ -89,6 +97,34 @@ class PhotosViewModel(
                 }
             }
         }
+    }
+
+    fun takePhoto(
+        filenameFormat: String,
+        imageCapture: ImageCapture,
+        outputDirectory: File,
+        executor: Executor,
+        onImageCaptured: (Uri) -> Unit
+    ) {
+        val photoFile = File(
+            outputDirectory,
+            SimpleDateFormat(
+                filenameFormat,
+                Locale.getDefault()
+            ).format(System.currentTimeMillis()) + TYPE
+        )
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+        imageCapture.takePicture(
+            outputOptions,
+            executor,
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exception: ImageCaptureException) {}
+
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val savedUri = Uri.fromFile(photoFile)
+                    onImageCaptured(savedUri)
+                }
+            })
     }
 
     private fun requestPhotos(offset: Int) {
@@ -127,7 +163,6 @@ class PhotosViewModel(
         }
 
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
-
         val byteArrayOutputStream = ByteArrayOutputStream()
         resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
@@ -138,7 +173,6 @@ class PhotosViewModel(
         } else {
             null
         }
-
     }
 
     companion object {
