@@ -12,8 +12,7 @@ import com.projects.photos_and_map.data.database.photos.dao.PhotoDao
 private const val PHOTOS_DATABASE_NAME = "photo-database"
 private const val COMMENTS_DATABASE_NAME = "comments-database"
 
-class PhotosAndMapApplication: Application()  {
-
+class PhotosAndMapApplication : Application() {
     override fun onCreate() {
         instance = this
         super.onCreate()
@@ -32,12 +31,10 @@ class PhotosAndMapApplication: Application()  {
         private lateinit var photoDao: PhotoDao
         private lateinit var commentDao: CommentDao
 
-        fun applicationContext() : Context = instance.applicationContext
+        fun applicationContext(): Context = instance.applicationContext
 
         fun getPhotoDao(): PhotoDao = photoDao
 
         fun getCommentDao(): CommentDao = commentDao
-
     }
-
 }

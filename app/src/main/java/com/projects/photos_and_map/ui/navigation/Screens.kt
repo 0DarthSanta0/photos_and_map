@@ -7,9 +7,9 @@ const val MAIN_SCREEN = "main_screen"
 const val DETAILS_SCREEN = "details_screen"
 
 sealed class Screens(val route: String) {
-    object AuthorizationScreen: Screens(AUTHORIZATION_SCREEN)
-    object MapScreen: Screens(MAP_SCREEN)
-    object PhotosScreen: Screens(PHOTOS_SCREEN)
-    object MainScreen: Screens(MAIN_SCREEN)
-    object DetailsScreen: Screens(DETAILS_SCREEN)
+    object AuthorizationScreen : Screens(AUTHORIZATION_SCREEN)
+    object MapScreen : Screens(MAP_SCREEN)
+    object PhotosScreen : Screens(PHOTOS_SCREEN)
+    object MainScreen : Screens(MAIN_SCREEN)
+    object DetailsScreen : Screens(DETAILS_SCREEN)
 }

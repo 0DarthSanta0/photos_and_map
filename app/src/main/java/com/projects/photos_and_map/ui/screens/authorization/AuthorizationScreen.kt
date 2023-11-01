@@ -57,6 +57,7 @@ fun AuthorizationScreen(
                     vertical = AppTheme.dimens.spacing170
                 )
             )
+
             1 -> AuthorizationPage(
                 login = login,
                 password = password,
@@ -67,7 +68,7 @@ fun AuthorizationScreen(
                 isRegistry = true,
                 confirmPassword = confirmPassword,
                 onConfirmPasswordValueChange = viewModel::onConfirmPasswordValueChange,
-                onSubmit ={ viewModel.onRegistration(onAuthorization) },
+                onSubmit = { viewModel.onRegistration(onAuthorization) },
                 modifier = Modifier.padding(
                     horizontal = AppTheme.dimens.spacing20,
                     vertical = AppTheme.dimens.spacing170

@@ -9,9 +9,11 @@ interface LoginRepository {
         login: String,
         password: String
     ): Flow<Result<Unit, AppErrors>>
+
     suspend fun signUp(
         login: String,
         password: String
     ): Flow<Result<Unit, AppErrors>>
+
     suspend fun isAuthorized(): Result<Boolean, AppErrors>
 }

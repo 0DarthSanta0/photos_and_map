@@ -36,7 +36,6 @@ class AuthorizationViewModel(
     private val _error: MutableStateFlow<AppErrors?> = MutableStateFlow(null)
     val error: StateFlow<AppErrors?> get() = _error
 
-
     fun onLoginValueChange(newValue: String) {
         _isLoginValid.value = newValue.length in 4..32
         _loginFieldState.value = newValue

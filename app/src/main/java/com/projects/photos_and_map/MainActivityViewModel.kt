@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 class MainActivityViewModel(
     private val isAuthorizedCheckUseCase: IsAuthorizedCheckUseCase
 ) : ViewModel() {
-
     private val _route: MutableStateFlow<Screens?> = MutableStateFlow(null)
     val route: StateFlow<Screens?> get() = _route
 

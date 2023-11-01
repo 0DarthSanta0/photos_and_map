@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
 import com.projects.photos_and_map.AppErrors
 import com.projects.photos_and_map.R
+import com.projects.photos_and_map.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +30,7 @@ fun AuthorizationPage(
     onLoginValueChange: (String) -> Unit,
     onPasswordValueChange: (String) -> Unit,
     onSubmit: () -> Unit,
-    onConfirmPasswordValueChange: (String) -> Unit = {}
+    onConfirmPasswordValueChange: (String) -> Unit = { }
 ) {
     Column(
         modifier = modifier,
@@ -42,21 +42,19 @@ fun AuthorizationPage(
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(AppTheme.dimens.spacing08),
             placeholder = { Text(stringResource(R.string.login_field)) }
         )
-
         OutlinedTextField(
             value = password,
             onValueChange = onPasswordValueChange,
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(AppTheme.dimens.spacing08),
             placeholder = { Text(stringResource(R.string.password_field)) },
             visualTransformation = PasswordVisualTransformation()
         )
-
         if (isRegistry) {
             if (confirmPassword != null) {
                 OutlinedTextField(
@@ -65,29 +63,27 @@ fun AuthorizationPage(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(AppTheme.dimens.spacing08),
                     placeholder = { Text(stringResource(R.string.confirm_password_field)) },
                     visualTransformation = PasswordVisualTransformation()
                 )
             }
         }
-
         if (error != null) {
             Text(
                 color = Color.Red,
                 text = stringResource(R.string.error),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(AppTheme.dimens.spacing08)
             )
         }
-
         Button(
             enabled = isFormValid,
             onClick = { onSubmit() },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(AppTheme.dimens.spacing08)
         ) {
             Text(stringResource(if (isRegistry) R.string.register_button else R.string.login_button))
         }

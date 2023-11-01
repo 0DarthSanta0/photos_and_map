@@ -15,6 +15,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+
 private const val IMAGE_ID = "imageId"
 private const val COMMENT_ID = "commentId"
 private const val PAGE = "page"
@@ -24,9 +25,7 @@ private const val COMMENT_URL = "/api/image/{$IMAGE_ID}/comment"
 private const val DELETE_IMAGE_URL = "/api/image/{$IMAGE_ID}"
 private const val DELETE_COMMENT_URL = "/api/image/{$IMAGE_ID}/comment/{$COMMENT_ID}"
 
-
 interface MainNetworkService {
-
     @POST(IMAGE_URL)
     suspend fun postImage(
         @Body body: ImageDtoIn
@@ -59,7 +58,6 @@ interface MainNetworkService {
         @Path(IMAGE_ID) imageId: Int,
         @Path(COMMENT_ID) commentId: Int,
     ): BaseResponse<CommentDtoOut>
-
 
     companion object MainNetworkHelper {
         fun getInstance(): MainNetworkService {

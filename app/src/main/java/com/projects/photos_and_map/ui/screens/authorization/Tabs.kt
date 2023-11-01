@@ -1,13 +1,9 @@
 package com.projects.photos_and_map.ui.screens.authorization
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,26 +38,6 @@ fun Tabs(
             text = stringResource(R.string.register),
             onTabSelected = { onTabSelected(1) },
             modifier = Modifier.height(AppTheme.dimens.spacing80)
-        )
-    }
-}
-
-@Composable
-fun AuthTab(
-    isSelected: Boolean,
-    text: String,
-    onTabSelected: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Tab(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.primary),
-        selected = isSelected,
-        onClick = { onTabSelected() }
-    ) {
-        Text(
-            text = text,
-            color = Color.White
         )
     }
 }

@@ -5,9 +5,10 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
-private const val AUTH = "Access-Token"
 
+private const val AUTH = "Access-Token"
 private const val TOKEN_KEY = "token"
+
 class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = runBlocking { DataStoreManagerImpl.getString(TOKEN_KEY) }

@@ -12,8 +12,8 @@ import com.projects.photos_and_map.ui.screens.main.MainScreen
 import com.projects.photos_and_map.ui.screens.map.MapScreen
 import com.projects.photos_and_map.ui.screens.photos.PhotosScreen
 
-private const val ID = "id"
 
+private const val ID = "id"
 
 @Composable
 fun AppNavigation(startScreen: Screens?) {
@@ -33,7 +33,6 @@ fun AppNavigation(startScreen: Screens?) {
     }
 }
 
-
 @Composable
 fun MainNavigation(startScreen: Screens) {
     val navController = rememberNavController()
@@ -42,7 +41,7 @@ fun MainNavigation(startScreen: Screens) {
         startDestination = startScreen.route
     ) {
         composable(route = Screens.PhotosScreen.route) {
-            PhotosScreen(onItemSelect = fun (id: Int) {
+            PhotosScreen(onItemSelect = fun(id: Int) {
                 navController.navigate(Screens.DetailsScreen.route + "/$id")
             })
         }
@@ -64,4 +63,3 @@ fun MainNavigation(startScreen: Screens) {
         }
     }
 }
-
