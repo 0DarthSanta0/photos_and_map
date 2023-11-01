@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import com.projects.photos_and_map.AppErrors
 import com.projects.photos_and_map.data.data_store.DataStoreManagerImpl
 import com.projects.photos_and_map.data.repositories.login.LoginRepositoryImpl
 import com.projects.photos_and_map.domain.use_cases.SignInUseCase
@@ -31,6 +33,8 @@ class AuthorizationViewModel(
     val isPasswordValid: StateFlow<Boolean> get() = _isPasswordValid
     private val _isConfirmPasswordValid: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isConfirmPasswordValid: StateFlow<Boolean> get() = _isConfirmPasswordValid
+    private val _error: MutableStateFlow<AppErrors?> = MutableStateFlow(null)
+    val error: StateFlow<AppErrors?> get() = _error
 
 
     fun onLoginValueChange(newValue: String) {
@@ -63,6 +67,8 @@ class AuthorizationViewModel(
             ).collect { signInRequest ->
                 signInRequest.onSuccess {
                     onLogin()
+                }.onFailure { err ->
+                    _error.value = err
                 }
             }
         }
@@ -78,6 +84,8 @@ class AuthorizationViewModel(
             ).collect { signUpRequest ->
                 signUpRequest.onSuccess {
                     onRegistration()
+                }.onFailure { err ->
+                    _error.value = err
                 }
             }
         }

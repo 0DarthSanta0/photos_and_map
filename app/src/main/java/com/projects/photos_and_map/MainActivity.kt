@@ -11,11 +11,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.projects.photos_and_map.ui.navigation.AppNavigation
-import com.projects.photos_and_map.ui.navigation.Screens
 import com.projects.photos_and_map.ui.theme.PhotosAndMapTheme
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainActivityViewModel by viewModels { MainActivityViewModelFactory() }
+
+//    private val requestPermissionLauncher = registerForActivityResult(
+//        ActivityResultContracts.RequestPermission()
+//    ) { }
+//
+//    private val requestPermissionLauncher1 = registerForActivityResult(
+//        ActivityResultContracts.RequestPermission()
+//    ) { }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -31,5 +39,29 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+//        requestCameraPermission()
+//        requestGPSPermission()
+
     }
+
+//    private fun requestCameraPermission() {
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                android.Manifest.permission.CAMERA
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+//        }
+//    }
+//
+//    private fun requestGPSPermission() {
+//        if (ContextCompat.checkSelfPermission(
+//                this,
+//                android.Manifest.permission.ACCESS_FINE_LOCATION
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestPermissionLauncher1.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+//        }
+//    }
+
 }

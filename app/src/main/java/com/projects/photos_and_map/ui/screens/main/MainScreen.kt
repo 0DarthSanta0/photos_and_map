@@ -25,13 +25,18 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.projects.photos_and_map.R
+import com.projects.photos_and_map.ui.navigation.MainNavigation
+import com.projects.photos_and_map.ui.navigation.Screens
 import com.projects.photos_and_map.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -42,6 +47,7 @@ fun MainScreen() {
     val scope = rememberCoroutineScope()
     val items = listOf(Icons.Default.Person, Icons.Default.Place)
     val selectedItem = remember { mutableStateOf(items[0]) }
+    val selectedPage: MutableState<Screens> = remember { mutableStateOf(Screens.PhotosScreen) }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -53,32 +59,37 @@ fun MainScreen() {
                         .height(AppTheme.dimens.spacing170)
                         .background(MaterialTheme.colorScheme.primary),
                     contentAlignment = Alignment.BottomStart,
-                ) {
-                    Text(
-                        text = "Header",
-                        color = Color.White
-                    )
-                }
+                ) { }
                 Spacer(Modifier.height(12.dp))
-                items.forEach { item ->
-                    NavigationDrawerItem(
-                        icon = { Icon(item, contentDescription = null) },
-                        label = { Text(item.name) },
-                        selected = item == selectedItem.value,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            selectedItem.value = item
-                        },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                    )
-                }
+                NavigationDrawerItem(
+                    icon = { Icon(items[0], contentDescription = null) },
+                    label = { Text(stringResource(R.string.photos)) },
+                    selected = items[0] == selectedItem.value,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        selectedItem.value = items[0]
+                        selectedPage.value = Screens.PhotosScreen
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+                NavigationDrawerItem(
+                    icon = { Icon(items[1], contentDescription = null) },
+                    label = { Text(stringResource(R.string.map)) },
+                    selected = items[1] == selectedItem.value,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        selectedItem.value = items[1]
+                        selectedPage.value = Screens.MapScreen
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
             }
         }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(AppTheme.dimens.spacing60)
                 .background(MaterialTheme.colorScheme.primary)
             ,
             horizontalArrangement = Arrangement.Start
@@ -86,11 +97,12 @@ fun MainScreen() {
             IconButton(onClick = { scope.launch { drawerState.open() } }) {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    contentDescription = "Toggle drawer",
+                    contentDescription = stringResource(R.string.menu),
                     tint = Color.White
                 )
             }
         }
+        MainNavigation(selectedPage.value)
     }
 }
 

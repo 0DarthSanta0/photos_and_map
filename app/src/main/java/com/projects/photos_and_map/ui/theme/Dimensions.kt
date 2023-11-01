@@ -14,7 +14,8 @@ class Dimensions(
     val spacing60: Dp,
     val spacing80: Dp,
     val spacing100: Dp,
-    val spacing170: Dp
+    val spacing170: Dp,
+    val spacing300: Dp
 )
 
 val defaultDimensions = Dimensions(
@@ -28,5 +29,6 @@ val defaultDimensions = Dimensions(
     spacing60 = 60.dp,
     spacing80 = 80.dp,
     spacing100 = 100.dp,
-    spacing170 = 170.dp
+    spacing170 = 170.dp,
+    spacing300 = 300.dp
 )

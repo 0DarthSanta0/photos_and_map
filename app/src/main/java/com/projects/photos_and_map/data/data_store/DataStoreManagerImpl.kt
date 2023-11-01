@@ -14,12 +14,9 @@ import kotlinx.coroutines.flow.map
 
 private const val NAME = "DataStore"
 
-
 @SuppressLint("StaticFieldLeak")
 object DataStoreManagerImpl : DataStoreManager {
-
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(NAME)
-
     private val context: Context = PhotosAndMapApplication.applicationContext()
 
     override suspend fun getString(key: String): String =
